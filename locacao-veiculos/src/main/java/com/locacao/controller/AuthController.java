@@ -114,4 +114,24 @@ public class AuthController {
 
         return response;
     }
+
+    @Operation(summary = "Deleta um usuário", description = "Este endpoint permite deletar um usuário pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
+    @DeleteMapping("/delete/{id}")
+    public Map<String, String> deleteUser(@PathVariable Long id) {
+        Map<String, String> response = new HashMap<>();
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()) {
+            userRepository.deleteById(id);
+            response.put("message", "Usuário deletado com sucesso!");
+        } else {
+            response.put("message", "Usuário não encontrado.");
+        }
+
+        return response;
+    }
 }

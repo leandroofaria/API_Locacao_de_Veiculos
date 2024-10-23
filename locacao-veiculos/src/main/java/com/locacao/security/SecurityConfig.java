@@ -23,9 +23,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())  // Desabilitando CSRF (não necessário para APIs REST)
+                .csrf(csrf -> csrf.disable())  // Desabilita CSRF (não necessário para APIs REST)
                 .authorizeHttpRequests(auth -> auth
-                        // Libera o acesso a todas as URLs do Swagger
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
@@ -34,13 +33,13 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**"
                         ).permitAll()
-                        // Libera o acesso aos endpoints de autenticação e edição de usuários
-                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/edit/**").permitAll()
-                        // Requer autenticação para qualquer outro endpoint
+                        // Permite o acesso público às rotas abaixo
+                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**").permitAll()
+                        // Todas as outras rotas precisam de autenticação
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Define sessão stateless
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Define que a sessão será stateless
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);  // Adiciona o filtro JWT
 
@@ -49,7 +48,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Usando BCrypt para codificar senhas
+        return new BCryptPasswordEncoder();  // Usa BCrypt para criptografar senhas
     }
 
     @Bean
