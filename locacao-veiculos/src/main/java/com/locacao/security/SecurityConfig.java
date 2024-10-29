@@ -34,7 +34,7 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
                         // Permite o acesso público às rotas abaixo
-                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**").permitAll()
+                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**", "/vehicles/add").permitAll()
                         // Todas as outras rotas precisam de autenticação
                         .anyRequest().authenticated()
                 )
