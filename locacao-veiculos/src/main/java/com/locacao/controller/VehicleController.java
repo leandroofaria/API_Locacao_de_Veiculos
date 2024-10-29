@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,5 +31,14 @@ public class VehicleController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Veículo adicionado com sucesso!");
         return response;
+    }
+
+    @Operation(summary = "Lista todos os veículos", description = "Retorna uma lista de todos os veículos disponíveis.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de veículos retornada com sucesso")
+    })
+    @GetMapping
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();  // Retorna todos os veículos do banco de dados
     }
 }
