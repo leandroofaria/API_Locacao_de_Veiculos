@@ -33,8 +33,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**"
                         ).permitAll()
-                        // Permite o acesso público às rotas de autenticação e veículos
-                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**", "/vehicles/add", "/vehicles").permitAll()
+                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**", "/vehicles/add", "/vehicles","/vehicles/{id}", "/vehicles/delete/**").permitAll()
                         // Todas as outras rotas precisam de autenticação
                         .anyRequest().authenticated()
                 )
@@ -56,4 +55,3 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
-""
