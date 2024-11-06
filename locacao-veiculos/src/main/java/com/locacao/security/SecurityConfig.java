@@ -26,16 +26,33 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Desabilita CSRF (não necessário para APIs REST)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                // Endpoints do Swagger
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-resources/**",
                                 "/swagger-ui.html",
-                                "/webjars/**"
-                        ).permitAll()
-                        .requestMatchers("/auth/register", "/auth/authenticate", "/auth/delete/**", "/auth/edit/**", "/vehicles/add", "/vehicles","/vehicles/{id}", "/vehicles/delete/**").permitAll()
-                        // Todas as outras rotas precisam de autenticação
-                        .anyRequest().authenticated()
+                                "/webjars/**",
+
+                                // Endpoints do AuthController
+                                "/auth/register",
+                                "/auth/authenticate",
+                                "/auth/delete/**",
+                                "/auth/edit/**",
+
+                                // Endpoints do VehicleController
+                                "/vehicles/add",
+                                "/vehicles",
+                                "/vehicles/{id}",
+                                "/vehicles/delete/**",
+
+                                // Endpoints do RentalController
+                                "/rentals/start",
+                                "/rentals/finish/**",
+                                "/rentals/{id}",
+                                "/rentals"
+                        ).permitAll()  // Permite todos os endpoints listados
+                        .anyRequest().authenticated()  // Qualquer outro endpoint requer autenticação
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Define que a sessão será stateless
