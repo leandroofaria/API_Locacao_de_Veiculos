@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.locacao</groupId>
-	<artifactId>user-service</artifactId>
+	<artifactId>vehicle-service</artifactId> <!-- Corrigido para vehicle-service -->
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-service</name>
-	<description>User Management Service</description>
+	<name>vehicle-service</name> <!-- Corrigido para vehicle-service -->
+	<description>Vehicle Management Service</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -73,7 +73,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId> <!-- ou jjwt-gson se preferir o Gson -->
+			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
@@ -112,6 +112,12 @@
 	</dependencyManagement>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
